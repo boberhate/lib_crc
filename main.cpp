@@ -9,34 +9,19 @@ int main(int argc, char *argv[])
 {
 	QCoreApplication a(argc, argv);
 
-	std::cout << "CRC на основе метапрограммирования" << std::endl;
+	std::cout <<std::hex << "CRC на основе метапрограммирования" << std::endl;
 
 	std::string check1 = "Hello World";
 
-	for(int i = 0; i < 256; i++) {
-		std::cout << std::dec << i << " : " << std::hex << crc_32()[i] << '\t';
-		if(i % 4 == 0)
-			std::cout << std::endl;
-	}
-
-	for(int i = 0; i < 256; i++) {
-		std::cout << std::dec << i << " : " << std::hex << crc_16_arc()[i] << '\t';
-		if(i % 4 == 0)
-			std::cout << std::endl;
-	}
-
-	for(int i = 0; i < 256; i++) {
-		std::cout << std::dec << i << " : " << std::hex << crc_16_ccitt()[i] << '\t';
-		if(i % 4 == 0)
-			std::cout << std::endl;
-	}
-
-	for(int i = 0; i < 256; i++) {
-		std::cout << std::dec << i << " : " << std::hex << crc_32_posix()[i] << '\t';
-		if(i % 4 == 0)
-			std::cout << std::endl;
-	}
-
+	std::cout << std::endl
+			  << "crc_8\t\t0x8005\t\t0x0\t\ttrue\ttrue\t0x0"
+			  << std::endl << (int)crc_8().hash(check1.c_str()) << std::endl;
+	std::cout << std::endl
+			  << "crc_8_cdma\t0x8005\t\t0x0\t\ttrue\ttrue\t0x0"
+			  << std::endl << (int)crc_8_cdma().hash(check1.c_str()) << std::endl;
+	std::cout << std::endl
+			  << "crc_8_darc\t0x8005\t\t0x0\t\ttrue\ttrue\t0x0"
+			  << std::endl << (int)crc_8_darc().hash(check1.c_str()) << std::endl;
 	std::cout << std::endl
 			  << "crc_16_arc\t0x8005\t\t0x0\t\ttrue\ttrue\t0x0"
 			  << std::endl << crc_16_arc().hash(check1.c_str()) << std::endl;
