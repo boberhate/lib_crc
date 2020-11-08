@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
 	QCoreApplication a(argc, argv);
 
-	std::cout <<std::hex << "CRC на основе метапрограммирования" << std::endl;
+	std::cout <<std::hex << "CRC metaprogramming" << std::endl;
 
 	std::string check1 = "Hello World";
 

@@ -55,13 +55,18 @@ public:
 		: table()
 	{
 		for(auto i = 0; i < 256; i++) {
-			table[i] = (refIn ? reflect(i, 8) : i) << (sizeof (W)-1)*8;
+			if constexpr (refIn) {
+				table[i] = reflect(i, 8) << (sizeof (W)-1)*8;
+			} else {
+				table[i] = i << (sizeof (W)-1)*8;
+			}
 			for(auto j = 0; j < 8; j++) {
 				table[i] = (table[i] << 1)
 						   ^ (table[i] & (1 << (sizeof(W)*8-1)) ? poly : 0);
 			}
-			if(refIn)
+			if constexpr (refIn) {
 				table[i] = reflect(table[i]);
+			}
 		}
 	}
 	W operator[] (int index) const {
@@ -73,9 +78,11 @@ public:
 
 		auto res = W(init);
 		for(auto i = 0; buffer[i]; i++) {
-			res = refOut
-				  ? (res >> 8) ^ table[(res & 0x0ff) ^ buffer[i]]
-				  : (res << 8) ^ table[(res >> (sizeof(W)-1)*8) ^ buffer[i]];
+			if constexpr (refOut) {
+				res = (res >> 8) ^ table[(res & 0x0ff) ^ buffer[i]];
+			} else {
+				res = (res << 8) ^ table[(res >> (sizeof(W)-1)*8) ^ buffer[i]];
+			}
 		}
 		return res ^ xorOut;
 	}
