@@ -17,13 +17,6 @@
  * //   XorOut - число, с которым складывается по модулю 2 результат
  *               (если отсутствует, то по умолчанию NULL, если NULL, то игнорируется)>
  *
- * Пример:
- * // объявление класса (вместо typedef)
- * using crc32_posix = crc::crc<std::uint32, 0x04c11db7, 0x4C11DB7, 0xFFFFFFFF, false, false, 0xFFFF>;
- *
- * // использование функции
- * crc32_posix::crc(unsigned char* data);
- *
  */
 
 #include <iostream>
