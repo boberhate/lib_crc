@@ -73,7 +73,7 @@ public:
 		return table[index];
 	}
 
-	W hash(const void *data) {
+	W checksum(const void *data) const {
 		const auto buffer = static_cast<const std::uint8_t*>(data);
 
 		auto res = W(init);
@@ -87,8 +87,30 @@ public:
 		return res ^ xorOut;
 	}
 
-	// TODO: провекра целостности сообщения
-	// bool check (const void *data, W poly)
+	std::uint8_t *encode(const void *data, int len=0) const {
+		const auto buffer = static_cast<const std::uint8_t*>(data);
+
+		if(len == 0) {
+			while(buffer[len++]);
+		}
+
+		auto sum = checksum(data);
+		std::uint8_t *msg = (std::uint8_t*)malloc(len + sizeof(W) + 1);
+
+		// message body
+		for(auto i = 0; i < len; i++) {
+			msg[i] = buffer[i];
+		}
+		// crc body
+		std::uint8_t *symbol_sum = (std::uint8_t*)malloc(sizeof(W));
+		for(auto i = 0; i < sizeof(W); i++) {
+			msg[len + i] = ((const std::uint8_t*)&sum)[i];
+			symbol_sum[i] = ((const std::uint8_t*)&sum)[i];
+		}
+
+		return msg;
+	}
+
 };
 
 using crc_8			= crc<std::uint8_t, 0x07, 0x0, false, false, 0x0>;
