@@ -21,6 +21,13 @@ using crc32_mpeg2 = crc::crc<std::uint32_t, 0x04C11DB7, 0xFFFFFFFF, false, false
 std::string some_data = "I need your clothes, your boots, and your motocycle";
 auto crc_sum = crc32_mpeg2().checksum(some_data.c_str());       // 0xa9cd0f0d
 
+...
+char c[] = {'a', 'b', 'c', 0x0};
+std::string s = "abc";
+
+std::cout << crc_16_ccitt().checksum(&c[0]) << std::endl;		// 0x514a
+std::cout << crc_16_ccitt().checksum(s.c_str()) << std::endl;	// 0x514a
+
 ```
 
 ### Доделать

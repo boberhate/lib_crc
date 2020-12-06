@@ -38,5 +38,13 @@ int main(int argc, char *argv[])
 			  << "crc_32_bzip2\t0x04C11DB7\t0xFFFFFFFF\tfalse\tfalse\t0xFFFFFFFF\n"
 			  << crc_32_posix().checksum(check1.c_str()) << std::endl;
 
+
+	char c[] = {'a', 'b', 'c', 0x0};
+	std::string s = "abc";
+
+	std::cout << crc_16_ccitt().checksum(&c[0]) << std::endl;
+	std::cout << crc_16_ccitt().checksum(s.c_str()) << std::endl;
+
+
 	return a.exec();
 }
