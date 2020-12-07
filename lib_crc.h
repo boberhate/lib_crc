@@ -26,7 +26,7 @@ namespace crc {
 
 // реверс байт в числе
 template<typename T>
-T reflect(T val, int len = 0) {
+constexpr T reflect(T val, int len = 0) {
 	auto result = T(0);
 	char ch = len != 0 ? len : sizeof(T)*8;
 	for(auto i = 0; i < ch; i++) {
